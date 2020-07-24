@@ -14,7 +14,6 @@ def miinoita(kentta, vapaat, miinojen_lukumaara):
     miinoja = 0
     rivit = len(kentta) - 1
     sarakkeet = len(kentta[0]) - 1
-    #kentta[rivit][sarakkeet] = "x"
     
     while miinoja < miinojen_lukumaara:
         x = random.randint(0, rivit)
