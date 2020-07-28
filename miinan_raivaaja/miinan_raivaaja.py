@@ -24,7 +24,10 @@ def kasittele_hiiri(x, y, painike, muokkausnappain):
         haravasto.HIIRI_KESKI: "keski"
     }
 
-    print('Hiiren nappia {} painettiin kohdassa {} {}'.format(painikkeet[painike], x, y))
+    sarake = int(x/40)
+    rivi = int(y/40)
+
+    print('Hiiren nappia {} painettiin kohdassa {} {}'.format(painikkeet[painike], int(x/40), int(y/40)))
 
 
 def tarkista(x, y):
