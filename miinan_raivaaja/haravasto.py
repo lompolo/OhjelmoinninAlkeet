@@ -57,6 +57,7 @@ kasittelijat = {
 
 glEnable(GL_TEXTURE_2D)
 
+
 def lataa_kuvat(polku):
     """
     Lataa ohjelman käyttämät oletuskuvat, joilla kuvataan miinakentän ruutuja.
@@ -88,6 +89,7 @@ def lataa_kuvat(polku):
     kuvat["f"] = pyglet.resource.image("ruutu_lippu.png")
     grafiikka["kuvat"] = kuvat
 
+
 def luo_ikkuna(leveys=800, korkeus=600, taustavari=(240, 240, 240, 255)):
     """
     Luo peli-ikkunan grafiikan näyttämistä varten. Funktiota tulee kutsua ennen
@@ -106,6 +108,7 @@ def luo_ikkuna(leveys=800, korkeus=600, taustavari=(240, 240, 240, 255)):
     grafiikka["tausta"] = pyglet.sprite.Sprite(
         pyglet.image.SolidColorImagePattern(taustavari).create_image(leveys, korkeus)
     )
+
 
 def muuta_ikkunan_koko(leveys, korkeus):
     """
@@ -151,6 +154,7 @@ def aseta_hiiri_kasittelija(kasittelija):
     else:
         print("Ikkunaa ei ole luotu!")
 
+
 def aseta_nappain_kasittelija(kasittelija):
     """
     Asettaa funktion, jota käytetään näppäimistöpainallusten käsittelyyn.
@@ -182,6 +186,7 @@ def aseta_nappain_kasittelija(kasittelija):
     else:
         print("Ikkunaa ei ole luotu!")
 
+
 def aseta_piirto_kasittelija(kasittelija):
     """
     Asettaa funktion, joka piirtää peli-ikkunan grafiikat. Jokseenkin tärkeä.
@@ -202,6 +207,7 @@ def aseta_piirto_kasittelija(kasittelija):
         grafiikka["ikkuna"].on_draw = kasittelija
     else:
         print("Ikkunaa ei ole luotu!")
+
 
 def aseta_toistuva_kasittelija(kasittelija, toistovali=1/60):
     """
@@ -227,6 +233,7 @@ def aseta_toistuva_kasittelija(kasittelija, toistovali=1/60):
     pyglet.clock.schedule_interval(kasittelija, toistovali)
     kasittelijat["toistuvat"].append(kasittelija)
 
+
 def aloita():
     """
     Käynnistää pelin. Ennen tämän kutsumista sinun tulee luoda ikkuna sekä
@@ -234,6 +241,7 @@ def aloita():
     """
 
     pyglet.app.run()
+
 
 def lopeta():
     """
@@ -266,6 +274,7 @@ def piirra_tausta():
 
     grafiikka["tausta"].draw()
 
+
 def piirra_tekstia(teksti, x, y, vari=(0, 0, 0, 255), fontti="serif", koko=32):
     """
     Piirtää tekstiä ruudulle. Voit käyttää tätä funktiota jos haluat kirjoittaa
@@ -293,6 +302,7 @@ def piirra_tekstia(teksti, x, y, vari=(0, 0, 0, 255), fontti="serif", koko=32):
     )
     tekstilaatikko.draw()
 
+
 def aloita_ruutujen_piirto():
     """
     Aloittaa ruutujen piirtämisen alustamalla eräänlaisen puskuriin, johon
@@ -303,6 +313,7 @@ def aloita_ruutujen_piirto():
     """
 
     grafiikka["puskuri"] = pyglet.graphics.Batch()
+
 
 def lisaa_piirrettava_ruutu(avain, x, y):
     """
@@ -327,6 +338,7 @@ def lisaa_piirrettava_ruutu(avain, x, y):
         batch=grafiikka["puskuri"]
     ))
 
+
 def piirra_ruudut():
     """
     Piirtää kaikki auki olevaan puskuriin lisätyt ruudut. Kutsu tätä funktiota
@@ -335,6 +347,7 @@ def piirra_ruudut():
 
     grafiikka["puskuri"].draw()
     grafiikka["spritet"].clear()
+
 
 if __name__ == "__main__":
     # Poistetaan kaksi pylint-varoitusta pois käytöstä, koska testikoodi
