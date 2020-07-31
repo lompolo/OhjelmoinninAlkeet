@@ -1,6 +1,7 @@
 import haravasto
 from peli import Peli
-
+from tekstiliittyma import Tekstiliittyma
+from pelaaja import Pelaaja
 
 RUUDUN_KOKO = 40
 
@@ -15,8 +16,8 @@ def kasittele_hiiri(x, y, painike, muokkausnappain):
         haravasto.HIIRI_KESKI: "keski"
     }
 
-    sarake = int(x/40)
-    rivi = int(y/40)
+    sarake = int(x / 40)
+    rivi = int(y / 40)
 
     Miinapeli.kasittele_syote(sarake, rivi, painikkeet[painike])
     piirra_kentta()
@@ -42,23 +43,36 @@ def piirra_kentta():
                 haravasto.lisaa_piirrettava_ruutu(" ", x * RUUDUN_KOKO, y * RUUDUN_KOKO)
     haravasto.piirra_ruudut()
     if Miinapeli.peli_loppu:
-        haravasto.lopeta()
         print("Game Over")
+        haravasto.lopeta()
 
 
-def main():
+def main(leveys, korkeus, miinat, pelaaja):
     """
     Luo pelikenttä ja lataa pelin grafiikat, luo peli-ikkunan ja asettaa siihen piirtokäsittelijän.
     """
     global Miinapeli
-    Miinapeli = Peli()
+    Miinapeli = Peli(leveys, korkeus, miinat, pelaaja)
     Miinapeli.luo_pelikentta()
     haravasto.lataa_kuvat("spritet")
-    haravasto.luo_ikkuna(Miinapeli.leveys*RUUDUN_KOKO, Miinapeli.korkeus*RUUDUN_KOKO)
+    haravasto.luo_ikkuna(Miinapeli.leveys * RUUDUN_KOKO, Miinapeli.korkeus * RUUDUN_KOKO + 50)
     haravasto.aseta_piirto_kasittelija(piirra_kentta)
     haravasto.aseta_hiiri_kasittelija(kasittele_hiiri)
     haravasto.aloita()
 
 
 if __name__ == "__main__":
-    main()
+    Valikko = Tekstiliittyma()
+    print("Tervetuloa miinantallajat-peliin!")
+    nimi = Valikko.kysy_nimi()
+    Miinantallaaja = Pelaaja(nimi)
+    while True:
+        valinta = Valikko.kayttoliittyma()
+
+        if valinta == "aloita":
+            leveys, korkeus, miinat = Valikko.kysy_aloitus()
+            main(leveys, korkeus, miinat, Miinantallaaja)
+        elif valinta == "data":
+            Valikko.katso_statistiikka(Miinantallaaja)
+        else:
+            break

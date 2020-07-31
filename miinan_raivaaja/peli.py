@@ -1,5 +1,5 @@
 from random import randint
-
+from pelaaja import Pelaaja
 
 class Ruutu:
     """
@@ -33,7 +33,7 @@ class Peli:
     """
     Pelikenttää kuvaava luokka, joka toteuttaa pelikentän tominnot
     """
-    def __init__(self, leveys=10, korkeus=10, miinat=10):
+    def __init__(self, leveys=10, korkeus=10, miinat=10, pelaaja="no_one"):
         self.leveys = leveys
         self.korkeus = korkeus
         if miinat > leveys * korkeus:
@@ -41,6 +41,7 @@ class Peli:
         self.miinojen_maara = miinat
         self.kentta = []
         self.peli_loppu = False
+        self.miinantallaaja = pelaaja
 
     def miinoita(self):
         """
