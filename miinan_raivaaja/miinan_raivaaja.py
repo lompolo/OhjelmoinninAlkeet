@@ -2,6 +2,9 @@ import haravasto
 from peli import Peli
 
 
+RUUDUN_KOKO = 40
+
+
 def kasittele_hiiri(x, y, painike, muokkausnappain):
     """
     Tätä funktiota kutsutaan kun käyttäjä klikkaa sovellusikkunaa hiirellä.
@@ -15,7 +18,7 @@ def kasittele_hiiri(x, y, painike, muokkausnappain):
     sarake = int(x/40)
     rivi = int(y/40)
 
-    Miinapeli.kasittele_syote(sarake, rivi, painike)
+    Miinapeli.kasittele_syote(sarake, rivi, painikkeet[painike])
     piirra_kentta()
 
 
@@ -29,13 +32,18 @@ def piirra_kentta():
     haravasto.piirra_tausta()
     haravasto.aloita_ruutujen_piirto()
 
-    """
     for y, lista in enumerate(Miinapeli.kentta):
-        for x, merkki in enumerate(lista):
-            haravasto.lisaa_piirrettava_ruutu(merkki, x * 40, y * 40)
-    """
-    Miinapeli.nayta_kentta()
+        for x, ruutu in enumerate(lista):
+            if ruutu.lippu:
+                haravasto.lisaa_piirrettava_ruutu("f", x * RUUDUN_KOKO, y * RUUDUN_KOKO)
+            elif ruutu.nakyva:
+                haravasto.lisaa_piirrettava_ruutu(ruutu.arvo, x * RUUDUN_KOKO, y * RUUDUN_KOKO)
+            else:
+                haravasto.lisaa_piirrettava_ruutu(" ", x * RUUDUN_KOKO, y * RUUDUN_KOKO)
     haravasto.piirra_ruudut()
+    if Miinapeli.peli_loppu:
+        haravasto.lopeta()
+        print("Game Over")
 
 
 def main():
@@ -46,7 +54,7 @@ def main():
     Miinapeli = Peli()
     Miinapeli.luo_pelikentta()
     haravasto.lataa_kuvat("spritet")
-    haravasto.luo_ikkuna(Miinapeli.leveys*40, Miinapeli.korkeus*40)
+    haravasto.luo_ikkuna(Miinapeli.leveys*RUUDUN_KOKO, Miinapeli.korkeus*RUUDUN_KOKO)
     haravasto.aseta_piirto_kasittelija(piirra_kentta)
     haravasto.aseta_hiiri_kasittelija(kasittele_hiiri)
     haravasto.aloita()
