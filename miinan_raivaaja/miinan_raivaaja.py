@@ -46,7 +46,7 @@ def piirra_kentta():
         haravasto.lopeta()
 
 
-def main(leveys, korkeus, miinat, pelaaja):
+def aloita_peli(leveys, korkeus, miinat, pelaaja):
     """
     Luo pelikenttä ja lataa pelin grafiikat, luo peli-ikkunan ja asettaa siihen piirtokäsittelijän.
     """
@@ -60,7 +60,10 @@ def main(leveys, korkeus, miinat, pelaaja):
     haravasto.aloita()
 
 
-if __name__ == "__main__":
+def main():
+    """
+    Pelin aloitusvalikko, miinapelin käynnistämisen ja statistiikan katselun käsittely
+    """
     Valikko = Tekstiliittyma()
     print("Tervetuloa miinantallajat-peliin!")
     nimi = Valikko.kysy_nimi()
@@ -69,8 +72,12 @@ if __name__ == "__main__":
 
         if valinta == "aloita":
             leveys, korkeus, miinat = Valikko.kysy_aloitus()
-            main(leveys, korkeus, miinat, nimi)
+            aloita_peli(leveys, korkeus, miinat, nimi)
         elif valinta == "data":
             Valikko.katso_statistiikka(nimi)
         else:
             break
+
+
+if __name__ == "__main__":
+    main()

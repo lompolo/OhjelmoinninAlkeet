@@ -26,7 +26,6 @@ class Pelaaja:
         self.kierosten_maara += 1
 
     def loppustatistiikka(self, voitto, leveys, korkeus, miinojen_maara):
-        print(voitto, leveys, korkeus, miinojen_maara)
         if voitto:
             print("Pelaaja {} voitti pelin. Onneksi olkoon!".format(self.nimi))
         else:
