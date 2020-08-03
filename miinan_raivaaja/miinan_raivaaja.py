@@ -1,7 +1,6 @@
 import haravasto
 from peli import Peli
 from tekstiliittyma import Tekstiliittyma
-from pelaaja import Pelaaja
 
 RUUDUN_KOKO = 40
 
@@ -55,7 +54,7 @@ def main(leveys, korkeus, miinat, pelaaja):
     Miinapeli = Peli(leveys, korkeus, miinat, pelaaja)
     Miinapeli.luo_pelikentta()
     haravasto.lataa_kuvat("spritet")
-    haravasto.luo_ikkuna(Miinapeli.leveys * RUUDUN_KOKO, Miinapeli.korkeus * RUUDUN_KOKO + 50)
+    haravasto.luo_ikkuna(Miinapeli.leveys * RUUDUN_KOKO, Miinapeli.korkeus * RUUDUN_KOKO)
     haravasto.aseta_piirto_kasittelija(piirra_kentta)
     haravasto.aseta_hiiri_kasittelija(kasittele_hiiri)
     haravasto.aloita()
@@ -65,14 +64,13 @@ if __name__ == "__main__":
     Valikko = Tekstiliittyma()
     print("Tervetuloa miinantallajat-peliin!")
     nimi = Valikko.kysy_nimi()
-    Miinantallaaja = Pelaaja(nimi)
     while True:
-        valinta = Valikko.kayttoliittyma()
+        valinta = Valikko.valikko()
 
         if valinta == "aloita":
             leveys, korkeus, miinat = Valikko.kysy_aloitus()
-            main(leveys, korkeus, miinat, Miinantallaaja)
+            main(leveys, korkeus, miinat, nimi)
         elif valinta == "data":
-            Valikko.katso_statistiikka(Miinantallaaja)
+            Valikko.katso_statistiikka(nimi)
         else:
             break

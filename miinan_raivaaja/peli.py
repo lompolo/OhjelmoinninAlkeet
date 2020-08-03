@@ -1,10 +1,12 @@
 from random import randint
 from pelaaja import Pelaaja
 
+
 class Ruutu:
     """
     Ruutu on apuluokka Peliluokalle. Ruudussa on ruudun arvo- ja tilatiedot
     """
+
     def __init__(self, arvo):
         self.arvo = arvo
         self.nakyva = False
@@ -33,6 +35,7 @@ class Peli:
     """
     Pelikenttää kuvaava luokka, joka toteuttaa pelikentän tominnot
     """
+
     def __init__(self, leveys=10, korkeus=10, miinat=10, pelaaja="no_one"):
         self.leveys = leveys
         self.korkeus = korkeus
@@ -41,7 +44,8 @@ class Peli:
         self.miinojen_maara = miinat
         self.kentta = []
         self.peli_loppu = False
-        self.miinantallaaja = pelaaja
+        self.miinantallaaja = Pelaaja(pelaaja)
+        self.nakyvien_maara = 0
 
     def miinoita(self):
         """
@@ -88,6 +92,7 @@ class Peli:
         self.kentta = kentta
         self.miinoita()
         self.laske_naapurimiinat()
+        self.miinantallaaja.aloita_keruu()
 
     def reunat_ok(self, y, x):
         """
@@ -127,12 +132,15 @@ class Peli:
                             if self.reunat_ok(y + dy, x + dx) and not self.on_arvo(y + dy, x + dx, "x"):
                                 queue.append((y + dy, x + dx))
 
-                self.kentta[y][x].muuta_nakyvaksi()
+                if not self.kentta[y][x].nakyva:
+                    self.kentta[y][x].muuta_nakyvaksi()
+                    self.nakyvien_maara += 1
 
     def kasittele_syote(self, sarake, rivi, painike):
         """
         Pelaaja syöte tulkitaan ja aktivoidaan syötteen edellyttämä toiminto
         """
+        self.miinantallaaja.lisaa_kierros()
         if painike == "oikea":
             self.kentta[rivi][sarake].liputa()
         else:
@@ -140,9 +148,24 @@ class Peli:
                 self.tulvataytto(rivi, sarake)
             elif self.kentta[rivi][sarake].arvo == "x":
                 self.kentta[rivi][sarake].muuta_nakyvaksi()
-                self.lopeta_peli()
+                self.lopeta_peli(False)
             else:
                 self.kentta[rivi][sarake].muuta_nakyvaksi()
+                self.nakyvien_maara += 1
 
-    def lopeta_peli(self):
+        self.tarkasta_voitto()
+
+    def lopeta_peli(self, voitto):
+        """
+        Käsittelee pelin loppumisen ja päättää pelaajadatan keräämisen
+        """
         self.peli_loppu = True
+        self.miinantallaaja.lopeta_keruu()
+        self.miinantallaaja.loppustatistiikka(voitto, self.leveys, self.korkeus, self.miinojen_maara)
+
+    def tarkasta_voitto(self):
+        """
+        Tarkastaan onko pelaaja löytänyt kaikki miinat
+        """
+        if self.nakyvien_maara == self.leveys * self.korkeus - self.miinojen_maara:
+            self.lopeta_peli(True)
