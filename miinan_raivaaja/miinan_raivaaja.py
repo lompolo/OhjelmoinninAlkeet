@@ -42,7 +42,6 @@ def piirra_kentta():
                 haravasto.lisaa_piirrettava_ruutu(" ", x * RUUDUN_KOKO, y * RUUDUN_KOKO)
     haravasto.piirra_ruudut()
     if Miinapeli.peli_loppu:
-        print("Game Over")
         haravasto.lopeta()
 
 
