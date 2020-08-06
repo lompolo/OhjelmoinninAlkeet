@@ -140,10 +140,10 @@ class Peli:
         """
         Pelaaja syöte tulkitaan ja aktivoidaan syötteen edellyttämä toiminto
         """
-        self.miinantallaaja.lisaa_kierros()
         if painike == "oikea":
             self.kentta[rivi][sarake].liputa()
         else:
+            self.miinantallaaja.lisaa_kierros()
             if self.kentta[rivi][sarake].arvo == " ":
                 self.tulvataytto(rivi, sarake)
             elif self.kentta[rivi][sarake].arvo == "x":
@@ -153,7 +153,7 @@ class Peli:
                 self.kentta[rivi][sarake].muuta_nakyvaksi()
                 self.nakyvien_maara += 1
 
-        self.tarkasta_voitto()
+            self.tarkasta_voitto()
 
     def lopeta_peli(self, voitto):
         """

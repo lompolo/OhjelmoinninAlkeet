@@ -1,3 +1,6 @@
+from pelaaja import lue_pelistatistiikka_nimella
+
+
 class Tekstiliittyma:
 
     def valikko(self):
@@ -55,4 +58,23 @@ class Tekstiliittyma:
                 return leveys, korkeus, miinat
 
     def katso_statistiikka(self, pelaaja):
-        print("Statistiikkaa pukkaa")
+        stat = lue_pelistatistiikka_nimella(pelaaja)
+
+        if not stat:
+            print("Statistiikka ei ole")
+        else:
+            print("{}:n pelihistoria: ".format(pelaaja))
+            for rivi in stat:
+                if rivi["voitto"]:
+                    rivi["voitto"] = "voitto"
+                else:
+                    rivi["voitto"] = "tappio"
+                print("{}: {} min, {} kierrosta, {}, l x k: {} x {}, {} miinaa". format(
+                    rivi["aika"],
+                    rivi["kesto"],
+                    rivi["kierrokset"],
+                    rivi["voitto"],
+                    rivi["leveys"],
+                    rivi["korkeus"],
+                    rivi["miinat"]
+                ))
