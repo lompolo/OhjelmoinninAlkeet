@@ -146,14 +146,15 @@ class Peli:
             self.miinantallaaja.lisaa_kierros()
             if self.kentta[rivi][sarake].arvo == " ":
                 self.tulvataytto(rivi, sarake)
+                self.tarkasta_voitto()
             elif self.kentta[rivi][sarake].arvo == "x":
                 self.kentta[rivi][sarake].muuta_nakyvaksi()
                 self.lopeta_peli(False)
             else:
                 self.kentta[rivi][sarake].muuta_nakyvaksi()
                 self.nakyvien_maara += 1
+                self.tarkasta_voitto()
 
-            self.tarkasta_voitto()
 
     def lopeta_peli(self, voitto):
         """
