@@ -29,14 +29,6 @@ class Tekstiliittyma:
         print("2. Lopeta")
         print("3. Katso tilastoja")
 
-    def lue_statistiikka(self):
-        try:
-            with open(self.tiedostopolku) as tiedosto:
-                for rivi in tiedosto.readline():
-                    self.statistiikka.append(self.lue_rivi(rivi))
-        except IOError:
-            print("Ei statistiikkatiedostoa. Luodaa uusi")
-
     def lue_rivi(self, rivi):
         try:
             rivi = rivi.split(",")
